@@ -31,4 +31,4 @@ interface UrlRepositoryInterface
      * @return bool True if the code exists, false otherwise
      */
     public function exists(string $code): bool;
-} 
+}

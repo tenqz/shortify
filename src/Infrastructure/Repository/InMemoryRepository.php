@@ -30,4 +30,4 @@ class InMemoryRepository implements UrlRepositoryInterface
     {
         return isset($this->urls[$code]);
     }
-} 
+}
