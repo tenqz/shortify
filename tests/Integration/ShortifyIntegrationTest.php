@@ -9,7 +9,7 @@ use Tenqz\Shortify\Shortify;
 use Tenqz\Shortify\Core\Url;
 use Tenqz\Shortify\Exceptions\InvalidUrlException;
 use Tenqz\Shortify\Exceptions\UrlNotFoundException;
-use Tenqz\Shortify\Infrastructure\Repository\UrlRepositoryInterface;
+use Tenqz\Shortify\Infrastructure\Repository\InMemoryRepository;
 
 class ShortifyIntegrationTest extends TestCase
 {
@@ -56,31 +56,5 @@ class ShortifyIntegrationTest extends TestCase
         $this->expectException(UrlNotFoundException::class);
         
         $this->shortify->expand('nonexistent');
-    }
-}
-
-/**
- * Simple in-memory repository implementation for testing.
- */
-class InMemoryRepository implements UrlRepositoryInterface
-{
-    private array $urls = [];
-
-    public function save(Url $url): void
-    {
-        $code = $url->getShortCode();
-        if ($code !== null) {
-            $this->urls[$code] = $url;
-        }
-    }
-
-    public function findByCode(string $code): ?Url
-    {
-        return $this->urls[$code] ?? null;
-    }
-
-    public function exists(string $code): bool
-    {
-        return isset($this->urls[$code]);
     }
 } 
