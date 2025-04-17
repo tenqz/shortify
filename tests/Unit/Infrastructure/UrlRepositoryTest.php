@@ -7,15 +7,17 @@ namespace Tenqz\Shortify\Tests\Unit\Infrastructure;
 use PHPUnit\Framework\TestCase;
 use Tenqz\Shortify\Core\Url;
 use Tenqz\Shortify\Infrastructure\Repository\UrlRepositoryInterface;
-
-abstract class UrlRepositoryInterfaceTest extends TestCase
+use Tenqz\Shortify\Infrastructure\Repository\InMemoryRepository;
+class UrlRepositoryTest extends TestCase
 {
     protected UrlRepositoryInterface $repository;
 
-    /**
-     * @test
-     */
-    public function itShouldSaveAndFindUrlByCode(): void
+    protected function setUp(): void
+    {
+        $this->repository = new InMemoryRepository();
+    }
+
+    public function testShouldSaveAndFindUrlByCode(): void
     {
         $originalUrl = 'https://example.com/long-url';
         $shortCode = 'abc123';
@@ -32,10 +34,7 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
         $this->assertEquals($shortCode, $foundUrl->getShortCode());
     }
 
-    /**
-     * @test
-     */
-    public function itShouldReturnNullWhenCodeNotFound(): void
+    public function testShouldReturnNullWhenCodeNotFound(): void
     {
         $nonExistentCode = 'nonexistent';
         
@@ -43,11 +42,8 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
         
         $this->assertNull($foundUrl);
     }
-
-    /**
-     * @test
-     */
-    public function itShouldCheckIfCodeExists(): void
+    
+    public function testShouldCheckIfCodeExists(): void
     {
         $originalUrl = 'https://example.com/another-url';
         $shortCode = 'def456';
@@ -60,4 +56,4 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
         $this->assertTrue($this->repository->exists($shortCode));
         $this->assertFalse($this->repository->exists('nonexistent'));
     }
-} 
+}
