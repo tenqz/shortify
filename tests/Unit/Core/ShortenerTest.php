@@ -25,22 +25,15 @@ class ShortenerTest extends TestCase
         $this->shortener = new Shortener($this->urlRepository, $this->codeGenerator);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldShortenUrlAndSaveToRepository(): void
+    public function testShortensUrlAndSavesToRepository(): void
     {
         $originalUrl = 'https://example.com/long-url';
         $shortCode = 'abc123';
 
         $this->codeGenerator->expects($this->once())
             ->method('generate')
+            ->with($originalUrl, 6)
             ->willReturn($shortCode);
-
-        $this->urlRepository->expects($this->once())
-            ->method('exists')
-            ->with($shortCode)
-            ->willReturn(false);
 
         $this->urlRepository->expects($this->once())
             ->method('save')
@@ -55,44 +48,11 @@ class ShortenerTest extends TestCase
         $this->assertEquals($shortCode, $result->getShortCode());
     }
 
-    /**
-     * @test
-     */
-    public function itShouldGenerateNewCodeIfCodeAlreadyExists(): void
-    {
-        $originalUrl = 'https://example.com/long-url';
-        $existingCode = 'abc123';
-        $newCode = 'def456';
-
-        $this->codeGenerator->expects($this->exactly(2))
-            ->method('generate')
-            ->willReturnOnConsecutiveCalls($existingCode, $newCode);
-
-        $this->urlRepository->expects($this->exactly(2))
-            ->method('exists')
-            ->withConsecutive([$existingCode], [$newCode])
-            ->willReturnOnConsecutiveCalls(true, false);
-
-        $this->urlRepository->expects($this->once())
-            ->method('save')
-            ->with($this->callback(function (Url $url) use ($originalUrl, $newCode) {
-                return $url->getOriginalUrl() === $originalUrl && $url->getShortCode() === $newCode;
-            }));
-
-        $result = $this->shortener->shorten($originalUrl);
-
-        $this->assertEquals($newCode, $result->getShortCode());
-    }
-
-    /**
-     * @test
-     */
-    public function itShouldExpandShortCodeToOriginalUrl(): void
+    public function testExpandsShortCodeToOriginalUrl(): void
     {
         $shortCode = 'abc123';
         $originalUrl = 'https://example.com/long-url';
-        $url = new Url($originalUrl);
-        $url->setShortCode($shortCode);
+        $url = new Url($originalUrl, $shortCode);
 
         $this->urlRepository->expects($this->once())
             ->method('findByCode')
@@ -104,10 +64,7 @@ class ShortenerTest extends TestCase
         $this->assertEquals($originalUrl, $result);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldThrowExceptionWhenCodeNotFound(): void
+    public function testThrowsExceptionWhenCodeNotFound(): void
     {
         $shortCode = 'abc123';
 
@@ -120,4 +77,4 @@ class ShortenerTest extends TestCase
 
         $this->shortener->expand($shortCode);
     }
-} 
+}

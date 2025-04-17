@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 namespace Tenqz\Shortify\Core;
+
 use Random\Randomizer;
 
 /**
  * Code generator for short URLs.
  */
-final class CodeGenerator
+class CodeGenerator
 {
     /**
      * The alphabet to use for the code.
@@ -18,7 +19,7 @@ final class CodeGenerator
     /**
      * Default code length.
      */
-    private const DEFAULT_LENGTH = 6;
+    public const DEFAULT_LENGTH = 6;
 
     /**
      * Generate a code for a given URL.
@@ -31,7 +32,7 @@ final class CodeGenerator
     {
         $randomizer = new Randomizer();
         $bytes = $randomizer->getBytesFromString($this->alphabet, $length);
- 
+
         return substr(md5($url . microtime(true) . $bytes), 0, $length);
     }
-} 
+}
