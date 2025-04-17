@@ -1,0 +1,19 @@
+{
+    "name": "tenqz/shortify",
+    "description": "🚀 Lightweight PHP library to shorten URLs effortlessly. Convert long links into short, memorable ones with zero dependencies. Perfect for APIs, custom shorteners, and frameworks like Laravel/Symfony.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tenqz\\Shortify\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oleg Patsay",
+            "email": "smmartbiz@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
