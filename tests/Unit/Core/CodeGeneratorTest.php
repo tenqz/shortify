@@ -16,10 +16,7 @@ class CodeGeneratorTest extends TestCase
         $this->codeGenerator = new CodeGenerator();
     }
 
-    /**
-     * @test
-     */
-    public function itShouldGenerateCodeWithDefaultLength(): void
+    public function testGeneratesCodeWithDefaultLength(): void
     {
         $url = 'https://example.com';
         $code = $this->codeGenerator->generate($url);
@@ -28,10 +25,7 @@ class CodeGeneratorTest extends TestCase
         $this->assertEquals(6, strlen($code));
     }
 
-    /**
-     * @test
-     */
-    public function itShouldGenerateCodeWithCustomLength(): void
+    public function testGeneratesCodeWithCustomLength(): void
     {
         $url = 'https://example.com';
         $length = 10;
@@ -41,14 +35,12 @@ class CodeGeneratorTest extends TestCase
         $this->assertEquals($length, strlen($code));
     }
 
-    /**
-     * @test
-     */
-    public function itShouldGenerateDifferentCodesEachTime(): void
+    public function testGeneratesDifferentCodesEachTime(): void
     {
         $codes = [];
         $iterations = 100;
         $url = 'https://example.com';
+        
         for ($i = 0; $i < $iterations; $i++) {
             $codes[] = $this->codeGenerator->generate($url);
         }
@@ -57,14 +49,11 @@ class CodeGeneratorTest extends TestCase
         $this->assertCount($iterations, $uniqueCodes);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldUseValidCharactersForCode(): void
+    public function testUsesValidCharactersForCode(): void
     {
         $url = 'https://example.com';
         $code = $this->codeGenerator->generate($url);
         
         $this->assertMatchesRegularExpression('/^[a-zA-Z0-9_~]+$/', $code);
     }
-} 
+}

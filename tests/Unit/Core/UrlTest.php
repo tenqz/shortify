@@ -11,29 +11,24 @@ use Tenqz\Shortify\Exceptions\InvalidUrlException;
 class UrlTest extends TestCase
 {
     /**
-     * @test
      * @dataProvider validUrlProvider
      */
-    public function itShouldCreateUrlWithValidUrlString(string $validUrl): void
+    public function testCreatesUrlWithValidUrlString(string $validUrl): void
     {
         $url = new Url($validUrl);
         $this->assertEquals($validUrl, $url->getOriginalUrl());
     }
 
     /**
-     * @test
      * @dataProvider invalidUrlProvider
      */
-    public function itShouldThrowExceptionWhenUrlIsInvalid(string $invalidUrl): void
+    public function testThrowsExceptionWhenUrlIsInvalid(string $invalidUrl): void
     {
         $this->expectException(InvalidUrlException::class);
         new Url($invalidUrl);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldSetAndGetShortCode(): void
+    public function testSetsAndGetsShortCode(): void
     {
         $shortCode = 'abc123';
         $url = new Url('https://example.com');
@@ -42,10 +37,7 @@ class UrlTest extends TestCase
         $this->assertEquals($shortCode, $url->getShortCode());
     }
 
-    /**
-     * @test
-     */
-    public function itShouldBeComparable(): void
+    public function testIsComparable(): void
     {
         $url1 = new Url('https://example.com');
         $url2 = new Url('https://example.com');
@@ -55,7 +47,7 @@ class UrlTest extends TestCase
         $this->assertFalse($url1->equals($url3));
     }
 
-    public function validUrlProvider(): array
+    public static function validUrlProvider(): array
     {
         return [
             ['https://example.com'],
@@ -66,7 +58,7 @@ class UrlTest extends TestCase
         ];
     }
 
-    public function invalidUrlProvider(): array
+    public static function invalidUrlProvider(): array
     {
         return [
             ['invalid-url'],
@@ -76,4 +68,4 @@ class UrlTest extends TestCase
             ['ftp://example.com'], // unsupported scheme
         ];
     }
-} 
+}
