@@ -14,7 +14,7 @@ class UrlTest extends TestCase
      * @test
      * @dataProvider validUrlProvider
      */
-    public function it_should_create_url_with_valid_url_string(string $validUrl): void
+    public function itShouldCreateUrlWithValidUrlString(string $validUrl): void
     {
         $url = new Url($validUrl);
         $this->assertEquals($validUrl, $url->getOriginalUrl());
@@ -24,7 +24,7 @@ class UrlTest extends TestCase
      * @test
      * @dataProvider invalidUrlProvider
      */
-    public function it_should_throw_exception_when_url_is_invalid(string $invalidUrl): void
+    public function itShouldThrowExceptionWhenUrlIsInvalid(string $invalidUrl): void
     {
         $this->expectException(InvalidUrlException::class);
         new Url($invalidUrl);
@@ -33,7 +33,7 @@ class UrlTest extends TestCase
     /**
      * @test
      */
-    public function it_should_set_and_get_short_code(): void
+    public function itShouldSetAndGetShortCode(): void
     {
         $url = new Url('https://example.com');
         $url->setShortCode('abc123');
@@ -44,7 +44,7 @@ class UrlTest extends TestCase
     /**
      * @test
      */
-    public function it_should_be_comparable(): void
+    public function itShouldBeComparable(): void
     {
         $url1 = new Url('https://example.com');
         $url2 = new Url('https://example.com');

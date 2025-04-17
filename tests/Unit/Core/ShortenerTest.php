@@ -28,7 +28,7 @@ class ShortenerTest extends TestCase
     /**
      * @test
      */
-    public function it_should_shorten_url_and_save_to_repository(): void
+    public function itShouldShortenUrlAndSaveToRepository(): void
     {
         $originalUrl = 'https://example.com/long-url';
         $shortCode = 'abc123';
@@ -58,7 +58,7 @@ class ShortenerTest extends TestCase
     /**
      * @test
      */
-    public function it_should_generate_new_code_if_code_already_exists(): void
+    public function itShouldGenerateNewCodeIfCodeAlreadyExists(): void
     {
         $originalUrl = 'https://example.com/long-url';
         $existingCode = 'abc123';
@@ -87,7 +87,7 @@ class ShortenerTest extends TestCase
     /**
      * @test
      */
-    public function it_should_expand_short_code_to_original_url(): void
+    public function itShouldExpandShortCodeToOriginalUrl(): void
     {
         $shortCode = 'abc123';
         $originalUrl = 'https://example.com/long-url';
@@ -107,7 +107,7 @@ class ShortenerTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_code_not_found(): void
+    public function itShouldThrowExceptionWhenCodeNotFound(): void
     {
         $shortCode = 'abc123';
 

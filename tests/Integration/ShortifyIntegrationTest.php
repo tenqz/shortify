@@ -9,6 +9,7 @@ use Tenqz\Shortify\Shortify;
 use Tenqz\Shortify\Core\Url;
 use Tenqz\Shortify\Exceptions\InvalidUrlException;
 use Tenqz\Shortify\Exceptions\UrlNotFoundException;
+use Tenqz\Shortify\Infrastructure\Repository\UrlRepositoryInterface;
 
 class ShortifyIntegrationTest extends TestCase
 {
@@ -17,13 +18,14 @@ class ShortifyIntegrationTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->shortify = new Shortify();
+        $repository = new InMemoryRepository();
+        $this->shortify = new Shortify($repository);
     }
 
     /**
      * @test
      */
-    public function it_should_shorten_and_expand_url(): void
+    public function itShouldShortenAndExpandUrl(): void
     {
         $url = $this->shortify->shorten($this->validUrl);
         
@@ -39,7 +41,7 @@ class ShortifyIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_shortening_invalid_url(): void
+    public function itShouldThrowExceptionWhenShorteningInvalidUrl(): void
     {
         $this->expectException(InvalidUrlException::class);
         
@@ -49,10 +51,36 @@ class ShortifyIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function it_should_throw_exception_when_expanding_nonexistent_code(): void
+    public function itShouldThrowExceptionWhenExpandingNonexistentCode(): void
     {
         $this->expectException(UrlNotFoundException::class);
         
         $this->shortify->expand('nonexistent');
+    }
+}
+
+/**
+ * Simple in-memory repository implementation for testing.
+ */
+class InMemoryRepository implements UrlRepositoryInterface
+{
+    private array $urls = [];
+
+    public function save(Url $url): void
+    {
+        $code = $url->getShortCode();
+        if ($code !== null) {
+            $this->urls[$code] = $url;
+        }
+    }
+
+    public function findByCode(string $code): ?Url
+    {
+        return $this->urls[$code] ?? null;
+    }
+
+    public function exists(string $code): bool
+    {
+        return isset($this->urls[$code]);
     }
 } 

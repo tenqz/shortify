@@ -15,7 +15,7 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
     /**
      * @test
      */
-    public function it_should_save_and_find_url_by_code(): void
+    public function itShouldSaveAndFindUrlByCode(): void
     {
         $originalUrl = 'https://example.com/long-url';
         $shortCode = 'abc123';
@@ -35,7 +35,7 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
     /**
      * @test
      */
-    public function it_should_return_null_when_code_not_found(): void
+    public function itShouldReturnNullWhenCodeNotFound(): void
     {
         $nonExistentCode = 'nonexistent';
         
@@ -47,7 +47,7 @@ abstract class UrlRepositoryInterfaceTest extends TestCase
     /**
      * @test
      */
-    public function it_should_check_if_code_exists(): void
+    public function itShouldCheckIfCodeExists(): void
     {
         $originalUrl = 'https://example.com/another-url';
         $shortCode = 'def456';

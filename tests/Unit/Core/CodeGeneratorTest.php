@@ -19,9 +19,10 @@ class CodeGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_should_generate_code_with_default_length(): void
+    public function itShouldGenerateCodeWithDefaultLength(): void
     {
-        $code = $this->codeGenerator->generate();
+        $url = 'https://example.com';
+        $code = $this->codeGenerator->generate($url);
         
         $this->assertIsString($code);
         $this->assertEquals(6, strlen($code));
@@ -30,10 +31,11 @@ class CodeGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_should_generate_code_with_custom_length(): void
+    public function itShouldGenerateCodeWithCustomLength(): void
     {
+        $url = 'https://example.com';
         $length = 10;
-        $code = $this->codeGenerator->generate($length);
+        $code = $this->codeGenerator->generate($url, $length);
         
         $this->assertIsString($code);
         $this->assertEquals($length, strlen($code));
@@ -42,13 +44,13 @@ class CodeGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_should_generate_different_codes_each_time(): void
+    public function itShouldGenerateDifferentCodesEachTime(): void
     {
         $codes = [];
         $iterations = 100;
-        
+        $url = 'https://example.com';
         for ($i = 0; $i < $iterations; $i++) {
-            $codes[] = $this->codeGenerator->generate();
+            $codes[] = $this->codeGenerator->generate($url);
         }
         
         $uniqueCodes = array_unique($codes);
@@ -58,9 +60,10 @@ class CodeGeneratorTest extends TestCase
     /**
      * @test
      */
-    public function it_should_use_valid_characters_for_code(): void
+    public function itShouldUseValidCharactersForCode(): void
     {
-        $code = $this->codeGenerator->generate();
+        $url = 'https://example.com';
+        $code = $this->codeGenerator->generate($url);
         
         $this->assertMatchesRegularExpression('/^[a-zA-Z0-9_~]+$/', $code);
     }
