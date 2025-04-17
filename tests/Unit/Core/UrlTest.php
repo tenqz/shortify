@@ -35,10 +35,11 @@ class UrlTest extends TestCase
      */
     public function itShouldSetAndGetShortCode(): void
     {
+        $shortCode = 'abc123';
         $url = new Url('https://example.com');
-        $url->setShortCode('abc123');
+        $url->setShortCode($shortCode);
         
-        $this->assertEquals('abc123', $url->getShortCode());
+        $this->assertEquals($shortCode, $url->getShortCode());
     }
 
     /**
