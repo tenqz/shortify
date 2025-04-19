@@ -25,7 +25,7 @@ class ShortifyIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function itShouldShortenAndExpandUrl(): void
+    public function testShouldShortenAndExpandUrl(): void
     {
         $url = $this->shortify->shorten($this->validUrl);
         
@@ -41,7 +41,7 @@ class ShortifyIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function itShouldThrowExceptionWhenShorteningInvalidUrl(): void
+    public function testShouldThrowExceptionWhenShorteningInvalidUrl(): void
     {
         $this->expectException(InvalidUrlException::class);
         
@@ -51,7 +51,7 @@ class ShortifyIntegrationTest extends TestCase
     /**
      * @test
      */
-    public function itShouldThrowExceptionWhenExpandingNonexistentCode(): void
+    public function testShouldThrowExceptionWhenExpandingNonexistentCode(): void
     {
         $this->expectException(UrlNotFoundException::class);
         
