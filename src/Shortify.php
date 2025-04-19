@@ -19,18 +19,14 @@ final class Shortify
     private Shortener $shortener;
 
     /**
-     * @param UrlRepositoryInterface|null $repository URL repository (optional)
+     * @param UrlRepositoryInterface $repository
      */
-    public function __construct(?UrlRepositoryInterface $repository = null)
+    public function __construct(?UrlRepositoryInterface $repository)
     {
-        if ($repository === null) {
-            throw new \InvalidArgumentException(
-                'Repository is required. Please provide an implementation of UrlRepositoryInterface.'
-            );
-        }
-
-        $codeGenerator = new CodeGenerator();
-        $this->shortener = new Shortener($repository, $codeGenerator);
+        $this->shortener = new Shortener(
+            $repository,
+            new CodeGenerator()
+        );
     }
 
     /**
@@ -55,17 +51,5 @@ final class Shortify
     public function expand(string $code): string
     {
         return $this->shortener->expand($code);
-    }
-
-    /**
-     * Set a custom repository.
-     *
-     * @param UrlRepositoryInterface $repository URL repository
-     * @return self
-     */
-    public function setRepository(UrlRepositoryInterface $repository): self
-    {
-        $this->shortener = new Shortener($repository, new CodeGenerator());
-        return $this;
     }
 }

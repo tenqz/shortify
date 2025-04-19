@@ -15,7 +15,7 @@ composer require tenqz/shortify
 
 ## Features
 
-- PHP 8.3+ support: `readonly` classes, typed properties, `#[\Override]` attribute
+- PHP 8.3+ 
 - PSR-12 compliant
 - SOLID/DDD: clear layer separation, ValueObject, Dependency Injection
 - TDD: code covered with tests

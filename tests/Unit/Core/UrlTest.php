@@ -5,14 +5,16 @@ declare(strict_types=1);
 namespace Tenqz\Shortify\Tests\Unit\Core;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tenqz\Shortify\Core\Url;
 use Tenqz\Shortify\Exceptions\InvalidUrlException;
 
 class UrlTest extends TestCase
 {
     /**
-     * @dataProvider validUrlProvider
+     * Test creates URL with valid URL string
      */
+    #[DataProvider('validUrlProvider')]
     public function testCreatesUrlWithValidUrlString(string $validUrl): void
     {
         $url = new Url($validUrl);
@@ -20,8 +22,9 @@ class UrlTest extends TestCase
     }
 
     /**
-     * @dataProvider invalidUrlProvider
+     * Test throws exception when URL is invalid
      */
+    #[DataProvider('invalidUrlProvider')]
     public function testThrowsExceptionWhenUrlIsInvalid(string $invalidUrl): void
     {
         $this->expectException(InvalidUrlException::class);

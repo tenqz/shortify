@@ -23,6 +23,10 @@ class InMemoryRepository implements UrlRepositoryInterface
 
     public function findByCode(string $code): ?Url
     {
+        if (empty($code)) {
+            return null;
+        }
+
         return $this->urls[$code] ?? null;
     }
 
